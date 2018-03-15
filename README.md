@@ -1,6 +1,6 @@
-# blaise-web
+# ams-frontend
 
-> Blaise Scientific Trading Ordering System
+> Attendance Monitoring System (Admin Side)
 
 ## Build Setup
 
