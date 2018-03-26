@@ -1,29 +1,38 @@
 let data = {
   menuItems: [
     { icon: 'mdi-view-dashboard', text: 'Dashboard', routeName: 'dashboard' },
-    { icon: 'mdi-account-multiple-outline', text: 'Client Management' },
     {
       icon: 'keyboard_arrow_up',
       'icon-alt': 'keyboard_arrow_down',
-      text: 'Product Management',
-      allowedUser: ['ADMIN'],
+      text: 'Masterlist',
       model: false,
       children: [
-        { icon: 'mdi-download-network', text: 'Supplier', allowedUser: ['ADMIN'], routeName: 'product-supplier' },
-        { icon: 'mdi-shape', text: 'Category', allowedUser: ['ADMIN'], routeName: 'product-category' },
-        { icon: 'mdi-water-pump', text: 'Products', allowedUser: ['ADMIN'], routeName: 'products' }
+        { icon: 'mdi-account-multiple-outline', text: 'Brethrens', allowedUser: ['ADMIN'], routeName: 'product-supplier' },
+        { icon: 'mdi-shape', text: 'Workers', allowedUser: ['ADMIN'], routeName: 'product-category' }
       ]
     },
-    {
-      icon: 'keyboard_arrow_up',
-      'icon-alt': 'keyboard_arrow_down',
-      text: 'Quotations',
-      model: false,
-      children: [
-        { icon: 'mdi-shape', text: 'Pending' },
-        { icon: 'mdi-view-list', text: 'Quotation List' }
-      ]
-    },
+    // {
+    //   icon: 'keyboard_arrow_up',
+    //   'icon-alt': 'keyboard_arrow_down',
+    //   text: 'Product Management',
+    //   allowedUser: ['ADMIN'],
+    //   model: false,
+    //   children: [
+    //     { icon: 'mdi-download-network', text: 'Supplier', allowedUser: ['ADMIN'], routeName: 'product-supplier' },
+    //     { icon: 'mdi-shape', text: 'Category', allowedUser: ['ADMIN'], routeName: 'product-category' },
+    //     { icon: 'mdi-water-pump', text: 'Products', allowedUser: ['ADMIN'], routeName: 'products' }
+    //   ]
+    // },
+    // {
+    //   icon: 'keyboard_arrow_up',
+    //   'icon-alt': 'keyboard_arrow_down',
+    //   text: 'Quotations',
+    //   model: false,
+    //   children: [
+    //     { icon: 'mdi-shape', text: 'Pending' },
+    //     { icon: 'mdi-view-list', text: 'Quotation List' }
+    //   ]
+    // },
     {
       icon: 'keyboard_arrow_up',
       'icon-alt': 'keyboard_arrow_down',
@@ -44,7 +53,7 @@ let data = {
         { icon: 'mdi-verified', text: 'User Roles' }
       ]
     },
-    { icon: 'settings', text: 'Settings' },
+    // { icon: 'settings', text: 'Settings' },
     { icon: 'mdi-logout', text: 'Logout', routeName: 'logout' }
   ]
 }

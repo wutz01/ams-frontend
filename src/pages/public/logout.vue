@@ -2,7 +2,7 @@
 #app
   v-app(dark)
     v-toolbar.white
-      img(src="/static/images/logo.png", height="64px", width="128px")
+      h1(style="color: black") AMS
       v-spacer
       public-navigation
 
