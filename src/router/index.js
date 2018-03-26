@@ -35,7 +35,7 @@ let requiresAuth = (to, from, next) => {
 
       EventBus.$emit('display-toast', {text: 'Authentication Failed. Please login again.', mode: 'error'})
       UserService.logout()
-      next({name: 'landing'})
+      next({name: 'login'})
     })
   }
 
@@ -49,7 +49,7 @@ export default new Router({
       path: '/',
       name: 'landing',
       meta: {public: true},
-      component: () => import('@/pages/public/landing')
+      component: () => import('@/pages/public/login')
     },
     {
       path: '/login',

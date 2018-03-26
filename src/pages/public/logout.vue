@@ -26,7 +26,7 @@ export default {
   mounted () {
     UserService.logout()
     setTimeout(() => {
-      this.$router.push({name: 'landing'})
+      this.$router.push({name: 'login'})
     }, 2500)
   }
 }
