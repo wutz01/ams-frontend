@@ -1,2 +1,0 @@
-webpackJsonp([7],{QWlh:function(t,e,o){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=o("XyMi"),a=Object(r.a)({name:"dashboard",data:function(){return{}},methods:{},components:{}},function(){var t=this.$createElement,e=this._self._c||t;return e("v-layout",{attrs:{row:"row"}},[e("h3",[this._v("Hello New Dashboard")]),e("v-btn",{attrs:{fab:"fab",bottom:"bottom",right:"right",color:"green",dark:"dark",fixed:"fixed"}},[e("v-icon",[this._v("add")])],1)],1)},[],!1,null,null,null);e.default=a.exports}});
-//# sourceMappingURL=7.96b380c10f3e3386a58d.js.map
