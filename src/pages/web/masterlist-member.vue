@@ -92,7 +92,7 @@ v-layout(row, wrap)
             @click.stop="updateMember(memberDialog.selected)"
           ) Update Member
 
-  v-btn(fab, bottom, right, color="green", dark, fixed, @click.stop="memberDialog.show = true")
+  v-btn(fab, bottom, left, color="green", dark, fixed, @click.stop="memberDialog.show = true")
     v-icon add
 </template>
 
