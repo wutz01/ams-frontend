@@ -7,32 +7,10 @@ let data = {
       text: 'Masterlist',
       model: false,
       children: [
-        { icon: 'mdi-account-multiple-outline', text: 'Brethrens', allowedUser: ['ADMIN'], routeName: 'product-supplier' },
-        { icon: 'mdi-shape', text: 'Workers', allowedUser: ['ADMIN'], routeName: 'product-category' }
+        { icon: 'mdi-account-multiple-outline', text: 'Brethrens', routeName: 'masterlist-member' },
+        { icon: 'mdi-shape', text: 'Workers', routeName: 'masterlist-workers' }
       ]
     },
-    // {
-    //   icon: 'keyboard_arrow_up',
-    //   'icon-alt': 'keyboard_arrow_down',
-    //   text: 'Product Management',
-    //   allowedUser: ['ADMIN'],
-    //   model: false,
-    //   children: [
-    //     { icon: 'mdi-download-network', text: 'Supplier', allowedUser: ['ADMIN'], routeName: 'product-supplier' },
-    //     { icon: 'mdi-shape', text: 'Category', allowedUser: ['ADMIN'], routeName: 'product-category' },
-    //     { icon: 'mdi-water-pump', text: 'Products', allowedUser: ['ADMIN'], routeName: 'products' }
-    //   ]
-    // },
-    // {
-    //   icon: 'keyboard_arrow_up',
-    //   'icon-alt': 'keyboard_arrow_down',
-    //   text: 'Quotations',
-    //   model: false,
-    //   children: [
-    //     { icon: 'mdi-shape', text: 'Pending' },
-    //     { icon: 'mdi-view-list', text: 'Quotation List' }
-    //   ]
-    // },
     {
       icon: 'keyboard_arrow_up',
       'icon-alt': 'keyboard_arrow_down',
@@ -49,8 +27,8 @@ let data = {
       text: 'User Management',
       model: false,
       children: [
-        { icon: 'mdi-account-plus', text: 'Users' },
-        { icon: 'mdi-verified', text: 'User Roles' }
+        { icon: 'mdi-account-plus', text: 'Users', allowedUser: ['ADMIN'] },
+        { icon: 'mdi-verified', text: 'User Roles', allowedUser: ['ADMIN'] }
       ]
     },
     // { icon: 'settings', text: 'Settings' },

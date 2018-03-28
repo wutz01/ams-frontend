@@ -109,17 +109,17 @@ export default new Router({
           beforeEnter: requiresAuth
         },
         {
-          path: '/product/supplier',
-          name: 'product-supplier',
-          meta: {auth: ['ADMIN'], title: 'Product Supplier'},
-          component: () => import('@/pages/web/product-supplier'),
+          path: '/masterlist/brethrens',
+          name: 'masterlist-member',
+          meta: {auth: ['ADMIN'], title: 'Masterlist > Brethrens'},
+          component: () => import('@/pages/web/masterlist-member'),
           beforeEnter: requiresAuth
         },
         {
-          path: '/product/category',
-          name: 'product-category',
-          meta: {auth: ['ADMIN'], title: 'Product Category'},
-          component: () => import('@/pages/web/product-category'),
+          path: '/masterlist/workers',
+          name: 'masterlist-workers',
+          meta: {auth: ['ADMIN'], title: 'Masterlist > Workers'},
+          component: () => import('@/pages/web/masterlist-workers'),
           beforeEnter: requiresAuth
         }
       ]
