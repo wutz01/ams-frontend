@@ -18,7 +18,8 @@ v-layout(row, wrap)
           td {{ props.item.contactNumber }}
           td.text-xs-left {{ props.item.status }}
           td.text-xs-left
-            v-btn( light, small, color="red", @click.native.stop="deleteMember(props.item)").white--text Delete
+            v-btn(icon, light, small, color="red", @click.native.stop="deleteMember(props.item)").white--text.pointer
+              v-icon mdi-delete
 
   v-dialog(v-model="memberDialog.show", max-width="500px", persistent)
     v-form(ref="createMemberForm")
@@ -26,6 +27,16 @@ v-layout(row, wrap)
         v-card-title.title {{ (memberDialog.selected ? 'Update Member' : 'Add Member') }}
         v-card-text
           v-layout(row, wrap)
+            v-flex(xs12)
+              v-text-field(
+                light,
+                single-line,
+                prepend-icon="mdi-account-box",
+                v-model="input.churchId",
+                label="Church ID",
+                :rules="[inputRules()['required']]"
+                required
+              )
             v-flex(xs12)
               v-text-field(
                 light,
@@ -74,6 +85,30 @@ v-layout(row, wrap)
                 label="Contact Number",
                 :rules="[inputRules()['required']]"
               )
+            v-flex(xs12)
+              v-text-field(
+                light,
+                required,
+                single-line,
+                prepend-icon="mdi-email",
+                v-model="input.email",
+                label="Email Address",
+                :rules="[inputRules()['required']]"
+              )
+            v-flex(xs12)
+              v-select(
+                :items="['ACTIVE', 'INACTIVE', 'RFA', 'UNKNOWN', 'OUT OF COUNTRY', 'CANNOT BE LOC']",
+                label="Status",
+                :rules="[inputRules()['required']]",
+                v-model="input.status",
+                required,
+                prepend-icon="mdi-battery"
+              )
+            v-flex(xs12)
+              v-switch(
+                label="is Officer?",
+                v-model="input.isOfficer"
+              )
         v-card-actions.display-flex.justify-end
           v-btn(color="red", flat, @click.stop="cancelModal", :disabled="loading.create") Close
           v-btn(
@@ -107,7 +142,7 @@ export default {
       rowPerPageItems: [15, 25, 50, {'text': 'All', 'value': -1}],
       headers: [
         {text: 'ID', align: 'left', sortable: true, value: 'churchId'},
-        {text: 'Name', align: 'left', sortable: false, value: 'lastname'},
+        {text: 'Name', align: 'left', sortable: false, value: 'name'},
         {text: 'Address', align: 'left', value: 'address'},
         {text: 'Contact Number', align: 'left', value: 'contactNumber'},
         {text: 'Status', align: 'left', value: 'status'},
@@ -115,11 +150,15 @@ export default {
       ],
       search: null,
       input: {
-        lastname: null,
+        churchId: null,
         firstname: null,
+        lastname: null,
         middlename: null,
         address: null,
-        contactNumber: null
+        contactNumber: null,
+        email: null,
+        status: null,
+        isOfficer: false
       },
       memberList: [],
       memberDialog: {
@@ -140,12 +179,17 @@ export default {
       try {
         this.loading.create = true
         await MasterlistService.updateMember({
-          id: this.memberDialog.selected,
+          userId: memberId,
           firstname: this.input.firstname,
           lastname: this.input.lastname,
           middlename: this.input.middlename,
           address: this.input.address,
-          contactNumber: this.input.contactNumber
+          contactNumber: this.input.contactNumber,
+          churchId: this.input.churchId,
+          email: this.input.email,
+          status: this.input.status,
+          memberType: `MEMBER`,
+          isOfficer: this.input.isOfficer
         })
 
         this.displayToast(`Member has been updated`)
@@ -162,11 +206,15 @@ export default {
     cancelModal () {
       this.memberDialog.show = false
       this.input = {
+        churchId: null,
         firstname: null,
         lastname: null,
         middlename: null,
         address: null,
-        contactNumber: null
+        contactNumber: null,
+        email: null,
+        status: null,
+        isOfficer: false
       }
 
       this.memberDialog.selected = null
@@ -178,7 +226,7 @@ export default {
 
     async deleteMember (member) {
       try {
-        let fullName = `${member.lastname}, ${member.firstname} ${member.middlename}`
+        // let fullName = `${member.lastname}, ${member.firstname} ${member.middlename}`
         // await MasterlistService.updateMember({
         //   supplierId: supplier.id,
         //   name: supplier.name,
@@ -187,7 +235,8 @@ export default {
         //   status: 'inactive'
         // })
 
-        this.displayToast(`Successfully deleted Member - ${fullName}`)
+        // this.displayToast(`Successfully deleted Member - ${fullName}`)
+        this.displayToast(`This function is not yet available`, 'error')
         this.loadMemberList()
       } catch (e) {
         console.log(`e`, e)
@@ -201,7 +250,11 @@ export default {
         lastname: member.lastname,
         middlename: member.middlename,
         address: member.address,
-        contactNumber: member.contactNumber
+        contactNumber: member.contactNumber,
+        churchId: member.churchId,
+        email: member.email,
+        status: member.status,
+        isOfficer: member.isOfficer
       }
 
       this.memberDialog.selected = member.id
@@ -214,6 +267,7 @@ export default {
 
       try {
         this.loading.create = true
+        this.input.memberType = `MEMBER`
         await MasterlistService.createMember(this.input)
 
         this.loadMemberList()

@@ -18,14 +18,25 @@ v-layout(row, wrap)
           td {{ props.item.contactNumber }}
           td.text-xs-left {{ props.item.status }}
           td.text-xs-left
-            v-btn( light, small, color="red", @click.native.stop="deleteMember(props.item)").white--text Delete
+            v-btn(icon, light, small, color="red", @click.native.stop="deleteMember(props.item)").white--text.pointer
+              v-icon mdi-delete
 
   v-dialog(v-model="memberDialog.show", max-width="500px", persistent)
     v-form(ref="createMemberForm")
       v-card
-        v-card-title.title {{ (memberDialog.selected ? 'Update Member' : 'Add Member') }}
+        v-card-title.title {{ (memberDialog.selected ? 'Update Worker' : 'Add Worker') }}
         v-card-text
           v-layout(row, wrap)
+            v-flex(xs12)
+              v-text-field(
+                light,
+                single-line,
+                prepend-icon="mdi-account-box",
+                v-model="input.churchId",
+                label="Church ID",
+                :rules="[inputRules()['required']]"
+                required
+              )
             v-flex(xs12)
               v-text-field(
                 light,
@@ -74,6 +85,25 @@ v-layout(row, wrap)
                 label="Contact Number",
                 :rules="[inputRules()['required']]"
               )
+            v-flex(xs12)
+              v-text-field(
+                light,
+                required,
+                single-line,
+                prepend-icon="mdi-email",
+                v-model="input.email",
+                label="Email Address",
+                :rules="[inputRules()['required']]"
+              )
+            v-flex(xs12)
+              v-select(
+                :items="['ACTIVE', 'INACTIVE', 'RFA', 'UNKNOWN', 'OUT OF COUNTRY', 'CANNOT BE LOC']",
+                label="Status",
+                :rules="[inputRules()['required']]",
+                v-model="input.status",
+                required,
+                prepend-icon="mdi-battery"
+              )
         v-card-actions.display-flex.justify-end
           v-btn(color="red", flat, @click.stop="cancelModal", :disabled="loading.create") Close
           v-btn(
@@ -82,7 +112,7 @@ v-layout(row, wrap)
             color="primary",
             :loading="loading.create",
             @click.stop="createMember"
-          ) Add Member
+          ) Add Worker
 
           v-btn(
             v-if="memberDialog.selected"
@@ -90,9 +120,9 @@ v-layout(row, wrap)
             color="primary",
             :loading="loading.create",
             @click.stop="updateMember(memberDialog.selected)"
-          ) Update Member
+          ) Update Worker
 
-  v-btn(fab, bottom, right, color="green", dark, fixed, @click.stop="memberDialog.show = true")
+  v-btn(fab, bottom, left, color="green", dark, fixed, @click.stop="memberDialog.show = true")
     v-icon add
 </template>
 
@@ -107,7 +137,7 @@ export default {
       rowPerPageItems: [15, 25, 50, {'text': 'All', 'value': -1}],
       headers: [
         {text: 'ID', align: 'left', sortable: true, value: 'churchId'},
-        {text: 'Name', align: 'left', sortable: false, value: 'lastname'},
+        {text: 'Name', align: 'left', sortable: false, value: 'name'},
         {text: 'Address', align: 'left', value: 'address'},
         {text: 'Contact Number', align: 'left', value: 'contactNumber'},
         {text: 'Status', align: 'left', value: 'status'},
@@ -115,11 +145,15 @@ export default {
       ],
       search: null,
       input: {
-        lastname: null,
+        churchId: null,
         firstname: null,
+        lastname: null,
         middlename: null,
         address: null,
-        contactNumber: null
+        contactNumber: null,
+        email: null,
+        status: null,
+        isOfficer: false
       },
       memberList: [],
       memberDialog: {
@@ -140,12 +174,17 @@ export default {
       try {
         this.loading.create = true
         await MasterlistService.updateMember({
-          id: this.memberDialog.selected,
+          userId: memberId,
           firstname: this.input.firstname,
           lastname: this.input.lastname,
           middlename: this.input.middlename,
           address: this.input.address,
-          contactNumber: this.input.contactNumber
+          contactNumber: this.input.contactNumber,
+          churchId: this.input.churchId,
+          email: this.input.email,
+          status: this.input.status,
+          memberType: `WORKER`,
+          isOfficer: this.input.isOfficer
         })
 
         this.displayToast(`Worker has been updated`)
@@ -162,11 +201,15 @@ export default {
     cancelModal () {
       this.memberDialog.show = false
       this.input = {
+        churchId: null,
         firstname: null,
         lastname: null,
         middlename: null,
         address: null,
-        contactNumber: null
+        contactNumber: null,
+        email: null,
+        status: null,
+        isOfficer: false
       }
 
       this.memberDialog.selected = null
@@ -201,7 +244,11 @@ export default {
         lastname: member.lastname,
         middlename: member.middlename,
         address: member.address,
-        contactNumber: member.contactNumber
+        contactNumber: member.contactNumber,
+        churchId: member.churchId,
+        email: member.email,
+        status: member.status,
+        isOfficer: member.isOfficer
       }
 
       this.memberDialog.selected = member.id
@@ -214,6 +261,7 @@ export default {
 
       try {
         this.loading.create = true
+        this.input.memberType = `WORKER`
         await MasterlistService.createMember(this.input)
 
         this.loadMemberList()
@@ -228,7 +276,7 @@ export default {
 
     async loadMemberList () {
       try {
-        this.memberList = await MasterlistService.loadMasterList('WORKERS')
+        this.memberList = await MasterlistService.loadMasterList('WORKER')
       } catch (e) {
         this.displayToast('An error occured when trying to load your workers List. Please try again', 'error')
       }

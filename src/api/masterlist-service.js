@@ -24,7 +24,7 @@ export default {
 
   createMember: (payload) => {
     return new Promise((resolve, reject) => {
-      Vue.http.post(`api/member/create`, payload).then((res) => {
+      Vue.http.post(`api/member/add`, payload).then((res) => {
         resolve(res.data.member)
       }).catch((err) => {
         reject(err)
