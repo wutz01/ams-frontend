@@ -2,6 +2,11 @@ let data = {
   menuItems: [
     { icon: 'mdi-view-dashboard', text: 'Dashboard', routeName: 'dashboard' },
     {
+      icon: 'mdi-checkbox-multiple-marked',
+      text: 'Attendance',
+      routeName: 'attendance'
+    },
+    {
       icon: 'keyboard_arrow_up',
       'icon-alt': 'keyboard_arrow_down',
       text: 'Masterlist',

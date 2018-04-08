@@ -88,24 +88,17 @@ export default new Router({
           beforeEnter: requiresAuth
         },
         {
-          path: '/products',
-          name: 'products',
-          meta: {auth: ['ADMIN'], title: 'Products'},
-          component: () => import('@/pages/web/products'),
+          path: '/attendance',
+          name: 'attendance',
+          meta: {auth: ['ADMIN'], title: 'Attendance'},
+          component: () => import('@/pages/web/attendance/list'),
           beforeEnter: requiresAuth
         },
         {
-          path: '/products/create',
-          name: 'product-create',
-          meta: {auth: ['ADMIN'], title: 'Products > Create'},
-          component: () => import('@/pages/web/create-product'),
-          beforeEnter: requiresAuth
-        },
-        {
-          path: '/products/:productId/view',
-          name: 'product-view',
-          meta: {auth: ['ADMIN'], title: 'Products > View'},
-          component: () => import('@/pages/web/product-view'),
+          path: '/attendance/:id/view',
+          name: 'attendance-view',
+          meta: {auth: ['ADMIN'], title: 'Attendance > View'},
+          component: () => import('@/pages/web/attendance/view'),
           beforeEnter: requiresAuth
         },
         {
